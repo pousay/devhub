@@ -1,19 +1,16 @@
 from typing import Annotated
-
-from fastapi import APIRouter, Depends, HTTPException, status
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
-
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
+from fastapi import APIRouter, Depends, HTTPException
+from fastapi.security import OAuth2PasswordRequestForm
+from .utils import authenticate_user, create_access_token, get_current_user
 
 router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
+class User:
+    pass
 
 
-# ==========================
-# Routes
-# ==========================
-@router.post("/login", response_model=Token)
+@router.post("/login")
 def login(form: Annotated[OAuth2PasswordRequestForm, Depends()]):
     user = authenticate_user(form.username, form.password)
     if not user:
