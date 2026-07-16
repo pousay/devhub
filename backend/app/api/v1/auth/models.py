@@ -17,3 +17,8 @@ class TokenPayload(BaseModel):
 
 class ResponseToken(Token):
     pass
+
+
+class LoginReuest(BaseModel):
+    username: str
+    password: str
